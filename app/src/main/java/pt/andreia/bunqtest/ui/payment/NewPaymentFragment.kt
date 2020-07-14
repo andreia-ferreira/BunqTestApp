@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import pt.andreia.bunqtest.R
 import pt.andreia.bunqtest.databinding.NewPaymentDialogFragmentBinding
 import pt.andreia.bunqtest.model.UserEntity
+import pt.andreia.bunqtest.model.enums.StatusRequestPaymentEnum
 
 class NewPaymentFragment : Fragment() {
 
@@ -44,17 +45,22 @@ class NewPaymentFragment : Fragment() {
 
     private fun initListeners() {
         binding.buttonPayment.setOnClickListener {
-            viewModel.sendRequestPayment {success -> checkSuccess(success)}
+            viewModel.sendRequestPayment {success, statusEnum -> checkSuccess(success, statusEnum)}
         }
     }
 
-    private fun checkSuccess(success: Boolean) {
-        if (success) {
-            Toast.makeText(mContext, resources.getString(R.string.message_success_payment), Toast.LENGTH_LONG).show()
-
+    private fun checkSuccess(success: Boolean, statusRequestPaymentEnum: StatusRequestPaymentEnum?) {
+        val message = if (success) {
+            when(statusRequestPaymentEnum) {
+                StatusRequestPaymentEnum.ACCEPTED -> resources.getString(R.string.message_success_payment)
+                StatusRequestPaymentEnum.REJECTED -> resources.getString(R.string.message_reject_payment)
+                StatusRequestPaymentEnum.PENDING -> resources.getString(R.string.message_pending_payment)
+                else -> resources.getString(R.string.error_request_payment)
+            }
         } else {
-            Toast.makeText(mContext, resources.getString(R.string.error_request_payment), Toast.LENGTH_LONG).show()
+            resources.getString(R.string.error_request_payment)
         }
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
         activity?.supportFragmentManager?.popBackStack()
     }
 

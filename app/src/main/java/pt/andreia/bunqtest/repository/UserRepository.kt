@@ -74,10 +74,16 @@ class UserRepository(private val mApplication: Application,
         val response = api.getApiClient().checkPaymentStatus(userId, monetaryId, id)
         if (response.isSuccessful) {
             response.body()?.response?.get(0)?.requestInquiry?.status?.let {
-                if (it == StatusRequestPaymentEnum.ACCEPTED.name) {
-                    return StatusRequestPaymentEnum.ACCEPTED
-                } else {
-                    return StatusRequestPaymentEnum.REJECTED
+                return when (it) {
+                    StatusRequestPaymentEnum.ACCEPTED.name -> {
+                        StatusRequestPaymentEnum.ACCEPTED
+                    }
+                    StatusRequestPaymentEnum.REJECTED.name -> {
+                        StatusRequestPaymentEnum.REJECTED
+                    }
+                    else -> {
+                        StatusRequestPaymentEnum.PENDING
+                    }
                 }
             }
         } else {

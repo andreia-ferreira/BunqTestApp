@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import pt.andreia.bunqtest.R
 import pt.andreia.bunqtest.databinding.MainFragmentBinding
 import pt.andreia.bunqtest.model.interfaces.ActivityCallback
@@ -62,13 +63,15 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    private fun onClickPayment(id: Int?) {
-
-    }
+    private fun onClickPayment(id: Int?) {}
 
     private fun initListeners() {
         binding.buttonPayment.setOnClickListener {
             mCallback?.openNewPaymentFragment()
+        }
+
+        binding.swipeRefreshLayout = SwipeRefreshLayout.OnRefreshListener {
+            viewModel.getUserPayments()
         }
     }
 

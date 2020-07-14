@@ -16,6 +16,9 @@
         <variable
             name="scrollListener"
             type="androidx.recyclerview.widget.RecyclerView.OnScrollListener" />
+        <variable
+            name="swipeRefreshLayout"
+            type="androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener" />
 
         <variable
             name="viewModel"
@@ -51,18 +54,26 @@
             app:layout_constraintTop_toBottomOf="@id/userNameTextView"
             android:visibility="@{viewModel.isLoading ? View.INVISIBLE: View.VISIBLE}"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            adapter="@{adapter}"
-            layoutManager="@{layoutManager}"
-            scrollListener="@{scrollListener}"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
+            isRefreshing="@{viewModel.isLoading}"
+            swipeListener="@{swipeRefreshLayout}"
             app:layout_constraintTop_toBottomOf="@id/listTitleRecycler"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/buttonPayment"
-            android:visibility="@{viewModel.isLoading ? View.INVISIBLE: View.VISIBLE}"/>
+            android:layout_marginBottom="16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            adapter="@{adapter}"
+            layoutManager="@{layoutManager}"
+            scrollListener="@{scrollListener}"
+            android:visibility="@{viewModel.isLoading ? View.INVISIBLE: View.VISIBLE}"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <Button
             android:id="@+id/buttonPayment"
@@ -80,15 +91,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="@{viewModel.isLoading ? View.INVISIBLE: View.VISIBLE}"/>
-
-        <ProgressBar
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE: View.GONE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

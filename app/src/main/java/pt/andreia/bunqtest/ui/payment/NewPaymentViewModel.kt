@@ -20,7 +20,7 @@ class NewPaymentViewModel(private val mApplication: Application) : AndroidViewMo
     val amount = MutableLiveData("100.0")
     val description = MutableLiveData("")
 
-    fun sendRequestPayment(onSuccessCallback: ((Boolean) -> (Unit))) {
+    fun sendRequestPayment(onSuccessCallback: ((Boolean, StatusRequestPaymentEnum?) -> (Unit))) {
         val input = NewRequestInquiry(allowBunqme = false,
             amountInquired = AmountInquired("EUR", amount.value),
             counterpartyAlias = CounterpartyAliasRequest(name.value, "EMAIL", email.value),
@@ -29,17 +29,11 @@ class NewPaymentViewModel(private val mApplication: Application) : AndroidViewMo
         viewModelScope.launch {
             val id = repository.requestNewPayment(input)
             if(id != null) {
-                when(repository.checkPayment(id)) {
-                    StatusRequestPaymentEnum.ACCEPTED,
-                    StatusRequestPaymentEnum.REJECTED -> {
-                        onSuccessCallback.invoke(true)
-                    }
-                    null -> {
-                        onSuccessCallback.invoke(false)
-                    }
+                repository.checkPayment(id)?.let {
+                    onSuccessCallback(true, it)
                 }
             } else {
-                onSuccessCallback.invoke(false)
+                onSuccessCallback.invoke(false, null)
             }
         }
 

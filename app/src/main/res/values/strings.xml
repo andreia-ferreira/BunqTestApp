@@ -11,7 +11,8 @@
     <string name="title_amount">Amount</string>
     <string name="title_description">Description</string>
     <string name="message_success_payment">Payment requested successfully</string>
-    <string name="message_reject_payment">Payment rejected</string>
+    <string name="message_reject_payment">Your payment was rejected</string>
+    <string name="message_pending_payment">Your payment is pending.</string>
     <string name="error_user_info">There was an error while getting the user information</string>
     <string name="error_get_payments">There was an error while getting the user payments</string>
     <string name="error_request_payment">There was an error while requesting the payment</string>

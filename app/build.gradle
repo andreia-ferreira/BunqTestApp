@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         buildConfigField("String", "BASE_URL", "\"https://public-api.sandbox.bunq.com/v1/\"")
-        buildConfigField("String", "API_KEY", "\"fd922e448655629fe3f855a7ee4ee90a0464bc9d47fd06ae17694d4271d1686b\"")
+        buildConfigField("String", "API_KEY", "\"efc86ba59c96a9947b3d55258ef4a56d36b637ea5466b2ba63a8e4d62cf204f4\"")
     }
 
     buildTypes {
