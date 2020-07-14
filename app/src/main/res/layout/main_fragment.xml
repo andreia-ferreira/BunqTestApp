@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="adapter"
+            type="pt.andreia.bunqtest.ui.adapter.PaymentsRecyclerViewAdapter" />
+
+        <variable
+            name="layoutManager"
+            type="androidx.recyclerview.widget.RecyclerView.LayoutManager" />
+
+        <variable
+            name="scrollListener"
+            type="androidx.recyclerview.widget.RecyclerView.OnScrollListener" />
+
+        <variable
+            name="viewModel"
+            type="pt.andreia.bunqtest.ui.main.MainFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/userNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@{@string/main_title_greet(viewModel.user.name)}"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.isLoading ? View.INVISIBLE: View.VISIBLE}"/>
+
+        <TextView
+            android:id="@+id/listTitleRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_list_payments"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userNameTextView"
+            android:visibility="@{viewModel.isLoading ? View.INVISIBLE: View.VISIBLE}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            adapter="@{adapter}"
+            layoutManager="@{layoutManager}"
+            scrollListener="@{scrollListener}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/listTitleRecycler"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonPayment"
+            android:visibility="@{viewModel.isLoading ? View.INVISIBLE: View.VISIBLE}"/>
+
+        <Button
+            android:id="@+id/buttonPayment"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorAccent"
+            android:text="@string/button_new_payment"
+            android:textColor="@android:color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{viewModel.isLoading ? View.INVISIBLE: View.VISIBLE}"/>
+
+        <ProgressBar
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE: View.GONE}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

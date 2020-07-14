@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">BunqTest</string>
+    <string name="payment_title">Payment to: %s</string>
+    <string name="main_title_greet">Hello %s</string>
+    <string name="format_currency">%s€</string>
+    <string name="button_new_payment">New payment</string>
+    <string name="button_send_request">Send Request</string>
+    <string name="title_list_payments">List of Payments:</string>
+    <string name="title_name">Name</string>
+    <string name="title_email">Email</string>
+    <string name="title_amount">Amount</string>
+    <string name="title_description">Description</string>
+    <string name="message_success_payment">Payment requested successfully</string>
+    <string name="message_reject_payment">Payment rejected</string>
+    <string name="error_user_info">There was an error while getting the user information</string>
+    <string name="error_get_payments">There was an error while getting the user payments</string>
+    <string name="error_request_payment">There was an error while requesting the payment</string>
+    <string name="error_authentication">There was an error in the authentication process.</string>
+</resources>
