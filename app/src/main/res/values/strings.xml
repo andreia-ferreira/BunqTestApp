@@ -17,4 +17,5 @@
     <string name="error_get_payments">There was an error while getting the user payments</string>
     <string name="error_request_payment">There was an error while requesting the payment</string>
     <string name="error_authentication">There was an error in the authentication process.</string>
+    <string name="error_invalid_amount">Invalid amount</string>
 </resources>

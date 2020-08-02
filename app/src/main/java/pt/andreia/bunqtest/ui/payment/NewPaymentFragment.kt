@@ -1,26 +1,23 @@
 package pt.andreia.bunqtest.ui.payment
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import pt.andreia.bunqtest.R
-import pt.andreia.bunqtest.databinding.NewPaymentDialogFragmentBinding
-import pt.andreia.bunqtest.model.UserEntity
+import pt.andreia.bunqtest.databinding.NewPaymentFragmentBinding
 import pt.andreia.bunqtest.model.enums.StatusRequestPaymentEnum
+import pt.andreia.bunqtest.utils.format.CurrencyUtils.validateCurrency
 
 class NewPaymentFragment : Fragment() {
 
     private val viewModel: NewPaymentViewModel by lazy { ViewModelProvider(this).get(NewPaymentViewModel::class.java) }
-    private lateinit var binding: NewPaymentDialogFragmentBinding
+    private lateinit var binding: NewPaymentFragmentBinding
     private lateinit var mContext: Context
 
     override fun onAttach(context: Context) {
@@ -34,7 +31,7 @@ class NewPaymentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.new_payment_dialog_fragment, null, false)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.new_payment_fragment, null, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -45,8 +42,13 @@ class NewPaymentFragment : Fragment() {
 
     private fun initListeners() {
         binding.buttonPayment.setOnClickListener {
-            viewModel.sendRequestPayment {success, statusEnum -> checkSuccess(success, statusEnum)}
+            if (validateCurrency(viewModel.amount.value)) {
+                viewModel.sendRequestPayment {success, statusEnum -> checkSuccess(success, statusEnum)}
+            } else {
+                Toast.makeText(mContext, resources.getString(R.string.error_invalid_amount), Toast.LENGTH_LONG).show()
+            }
         }
+
     }
 
     private fun checkSuccess(success: Boolean, statusRequestPaymentEnum: StatusRequestPaymentEnum?) {
